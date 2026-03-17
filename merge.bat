@@ -9,7 +9,7 @@ git pull upstream main
 
 
 git checkout practice
-git merge -f main
+git merge main
 
 
 git add -A
