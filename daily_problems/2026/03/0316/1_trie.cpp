@@ -10,13 +10,23 @@ void solve(){
     int n;
     cin>>n;
     vector<int> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    sort(all(v));
+    vector<vector<int>> trie(1,vector<int>(2,0));
     int ans=LLONG_MAX;
-    for(int i=1;i<n;i++){
-        ans=min(ans,v[i]^v[i-1]);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+        int temp=v[i];
+        int j=0;
+        int res=0;
+        while(temp){
+            int b=temp%2;
+            temp>>=1;
+            if(b==1){
+                if(trie[j][1]==1)
+            }else{
+
+            }
+        }
     }
-    cout<<ans<<'\n';
 }
 signed main(){
     ios::sync_with_stdio(false);
