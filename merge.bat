@@ -1,15 +1,15 @@
-@echo off
 
 git add -A
 git commit -m "Auto-save before sync"
 
 
 git checkout main
-git pull upstream main
+git pull upstream
 
 
 git checkout practice
 git merge main
+git checkout practice
 
 
 git add -A
