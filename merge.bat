@@ -1,3 +1,4 @@
+chcp 65001 > nul
 git add -A
 git commit -m "Auto-save before sync"
 git checkout main
