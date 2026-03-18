@@ -6,6 +6,6 @@ call git commit -m "Auto-save: %date% %time%"
 
 call git pull --rebase upstream main
 
-call git push origin main
+call git push origin main -f
 
 pause
