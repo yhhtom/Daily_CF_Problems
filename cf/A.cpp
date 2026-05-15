@@ -6,8 +6,26 @@
 #define PDD pair<double,double>
 #define all(x) x.begin(), x.end()
 using namespace std;
+int mod=676767677;
 void solve(){
-    cout<<123%0;
+    int n;
+    cin>>n;
+    int ans=0;
+    bool only1=true;
+    vector<int> v(n);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+    }
+    while(!v.empty()&&v.back()==1){
+        v.pop_back();
+        ans=1;
+    }
+    n =v.size();
+    for(int i=0;i<n;i++){
+        if(v[i]!=1) ans+=v[i];
+        ans%=mod;
+    }
+    cout<<ans<<'\n';
 }
 signed main(){
     ios::sync_with_stdio(false);

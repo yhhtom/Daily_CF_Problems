@@ -1,79 +1,187 @@
-#include<bits/stdc++.h>
-#define int long long
-#define mp make_pair
-#define pb push_back
-#define PII pair<int,int>
-#define PDD pair<double,double>
-#define all(x) x.begin(), x.end()
+#include <iostream>
 using namespace std;
-const vector<int> p={1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73};
-void solve(){
-    int n;
-    cin>>n;
-    vector<int> a(n+5),b(n+5),c(n+5);
-    for(int i=1;i<=n;i++){
-        cin>>a[i];
-    }
-    for(int i=1;i<=n;i++){
-        cin>>b[i];
-    }
-    for(int i=1;i<=n;i++){
-        if(i==1) c[i]=gcd(a[1],a[2]);
-        else if(i==n) c[i]=gcd(a[n],a[n-1]);
-        else c[i]=lcm(gcd(a[i],a[i-1]),gcd(a[i],a[i+1]));
 
-        if(c[i]>b[i]) c[i]=a[i];
+template <class T>
+class MyArray
+{
+private:
+    T *pAddress;
+    int mSize;
+    int mCapacity;
+
+public:
+    MyArray(int capacity)
+    {
+        this->mCapacity = capacity;
+        mSize = 0;
+        pAddress = new T[capacity];
     }
-    int m=p.size();
-    vector<vector<int>> dp(n+5,vector<int>(m,LLONG_MIN));
-    for(int i=0;i<m;i++){
-        if(i==0){
-            if(a[1]==c[1]){
-                dp[1][0]=0;
-            }else{
-                dp[1][0]=1;
+    MyArray(const MyArray &a)
+    {
+        this->mCapacity = a.mCapacity;
+        this->mSize = a.mSize;
+        this->pAddress = new T[a.mCapacity];
+        for (int i = 0; i < a.mSize; i++)
+        {
+            this->pAddress[i] = a.pAddress[i];
+        }
+    }
+    ~MyArray()
+    {
+        delete[] pAddress;
+    }
+    void pushBack(const T &val)
+    {
+        if (this->mSize == this->mCapacity)
+        {
+            cout << "Inserting new value failed: the array is full.\n";
+            return;
+        }
+        this->pAddress[mSize] = val;
+        this->mSize++;
+    }
+    T getMax()
+    {
+        T res = this->pAddress[0];
+        for (int i = 0; i < this->mSize; i++)
+        {
+            if (this->pAddress[i] > res)
+            {
+                res = this->pAddress[i];
             }
-            continue;
         }
-        int temp=c[1]*p[i];
-        if(temp<=b[1]&&temp!=a[1]&&gcd(temp,c[2])==gcd(a[1],a[2])){
-            dp[1][i]=1;
+        return res;
+    }
+    MyArray &operator=(const MyArray &a)
+    {
+        this->mCapacity = a.mCapacity;
+        this->mSize = a.mSize;
+        this->pAddress = new T[a.mCapacity];
+        for (int i = 0; i < a.mSize; i++)
+        {
+            this->pAddress[i] = a.pAddress[i];
         }
+        return *this;
     }
-    for(int i=2;i<=n;i++){
-        for(int j=0;j<m;j++){
-            for(int k=0;k<m;k++){
-                if(j==0){
-                    if(c[i]==a[i]) dp[i][j]=max(dp[i][j],dp[i-1][k]);
-                    else dp[i][j]=max(dp[i][j],dp[i-1][k]+1);
-                    continue;
-                }
-                int temp1=c[i-1]*p[k];
-                int temp2=c[i]*p[j];
-                if(temp2<=b[i]&&temp2!=a[i]&&gcd(temp1,temp2)==gcd(a[i-1],a[i])){
-                    if(i<n){
-                        if(gcd(temp2,c[i+1])==gcd(a[i],a[i+1])) dp[i][j]=max(dp[i][j],dp[i-1][k]+1);
-                    }else{
-                        dp[i][j]=max(dp[i][j],dp[i-1][k]+1);
-                    }
-                }
-            }
-        }
+    T &operator[](int index)
+    {
+        return this->pAddress[index];
     }
-    int ans=0;
-    for(int i=0;i<m;i++){
-        ans=max(ans,dp[n][i]);
+};
+class MyClassInt
+{
+private:
+    int val;
+
+public:
+    MyClassInt()
+    {
+        this->val = 0;
     }
-    cout<<ans<<'\n';
+    MyClassInt(int v)
+    {
+        this->val = v;
+    }
+    MyClassInt &operator=(const MyClassInt &o)
+    {
+        this->val = o.val;
+        return *this;
+    }
+    friend ostream &operator<<(ostream &os, const MyClassInt &my);
+    bool operator>(const MyClassInt &o)
+    {
+        return this->val > o.val;
+    }
+};
+ostream &operator<<(ostream &os, const MyClassInt &my)
+{
+    cout << my.val;
+    return os;
 }
-signed main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    int t;
-    cin>>t;
-    while(t--){
-        solve();
+class MyClassArr
+{
+private:
+    MyArray<int> *mArray;
+    int Len;
+
+public:
+    MyClassArr()
+    {
+        mArray = NULL;
+        Len = 0;
     }
+    MyClassArr(int arr[], int l)
+    {
+        this->Len = l;
+        this->mArray = new MyArray<int>(l);
+        for (int i = 0; i < l; i++)
+        {
+            this->mArray->pushBack(arr[i]);
+        }
+    }
+    MyClassArr(const MyClassArr &a)
+    {
+        this->Len = a.Len;
+        this->mArray = new MyArray<int>(a.Len);
+        for (int i = 0; i < this->Len; i++)
+        {
+            this->mArray->pushBack((*a.mArray)[i]);
+        }
+    }
+    MyClassArr &operator=(const MyClassArr &a)
+    {
+        this->Len = a.Len;
+        this->mArray = a.mArray;
+        return *this;
+    }
+    friend ostream &operator<<(ostream &os, const MyClassArr &my);
+    bool operator>(const MyClassArr &o)
+    {
+        for (int i = 0; i < this->Len && i < o.Len; i++)
+        {
+            if ((*this->mArray)[i] > (*o.mArray)[i])
+            {
+                return true;
+            }
+            else if ((*o.mArray)[i] > (*this->mArray)[i])
+            {
+                return false;
+            }
+        }
+        return this->Len > o.Len;
+    }
+};
+ostream &operator<<(ostream &os, const MyClassArr &my)
+{
+    for (int i = 0; i < my.Len; i++)
+    {
+        cout << (*my.mArray)[i] << ' ';
+    }
+    cout << '\n';
+    return os;
+}
+int main()
+{
+    cout << "Input the amount of variables to store in the MyClassArr array:\n";
+    int s;
+    cin >> s;
+    MyArray<MyClassArr> my(5);
+    for (int i = 1; i <= s; i++)
+    {
+        cout << "Input the size of MyArray " << i << ":\n";
+        int t;
+        cin >> t;
+        int *tempv = new int[t];
+        cout << "Input array " << i << ":\n";
+        for (int i = 0; i < t; i++)
+        {
+            cin >> tempv[i];
+        }
+        // cout<<t<<endl;
+        MyClassArr temp(tempv, t);
+        my.pushBack(temp);
+    }
+    cout << "The max value of the array is: " << my.getMax() << '\n';
+
     return 0;
 }
