@@ -1,0 +1,1 @@
+{"name":"Local: l","url":"d:\\NoobProjects\\Daily_CF_Problems\\ZZZMyCode\\2026\\05\\15\\l.cpp","tests":[{"id":1778860431910,"input":"5 3 1 2\n1 1 0\n4 2 0\n2 3 3\n5 4 0\n4 5 2\n3 3\n4 1\n1 6\n","output":"3\n2\n7\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\NoobProjects\\Daily_CF_Problems\\ZZZMyCode\\2026\\05\\15\\l.cpp","group":"local","local":true}
