@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #define int long long
+#define i64 long long
 #define mp make_pair
 #define pb push_back
 #define PII pair<int,int>
